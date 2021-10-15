@@ -12,26 +12,14 @@ $input = json_decode($inputJSON, TRUE);
     $payment->token = $input['token'];
     $payment->description = $input['description'];
     $payment->installments = (int)$input['installments'];
-    $payment->payment_method_id = "pix"; #$input['payment_method_id'];
+    $payment->payment_method_id = $input['payment_method_id'];
     $payment->issuer_id = (int)$input['issuer_id'];
     
     $payer = new MercadoPago\Payer();
     $payer->email = $input['payer']['email'];
-    $payer->first_name = "Test";
-    $payer->last_name = "Test3";
-
     $payer->identification = array(
         "type" => $input['payer']['identification']['type'],
         "number" => $input['payer']['identification']['number']
-
-    );
-    $payer->address = array(
-        "zip_code" => "06233200",
-        "street_name" => "Av. das Nações Unidas",
-        "street_number" => "3003",
-        "neighborhood" => "Bonfim",
-        "city" => "Osasco",
-        "federal_unit" => "SP"
     );
     $payment->payer = $payer;
     
@@ -40,15 +28,8 @@ $input = json_decode($inputJSON, TRUE);
     $response = array(
         'status' => $payment->status,
         'status_detail' => $payment->status_detail,
-        'boleto'=>$payment->transaction_details->external_resource_url,
-        'more'=>$payment->point_of_interaction,
-        'qr_code'=>$payment->point_of_interaction->transaction_data->qr_code,
-        'img'=>$payment->point_of_interaction->transaction_data->qr_code_base64,
         'id' => $payment->id
     );
-
-
-
     echo json_encode($response);
 
 ?>
