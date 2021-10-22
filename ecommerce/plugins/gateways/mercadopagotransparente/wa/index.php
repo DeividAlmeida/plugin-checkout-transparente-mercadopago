@@ -99,7 +99,7 @@
       </div>
       <div class="form-group">
         <label>Número do Cartão</label>
-        <input class="form-control" type="number" name="cardNumber" id="form-checkout__cardNumber" required/>
+        <input class="form-control" type="number" name="cardNumber" id="form-checkout__cardNumber" value="5031433215406351" required/>
       </div>
       <div class="form-group">
         <label>Mês de Vencimento</label>
@@ -209,7 +209,6 @@
       </div>                          
     </div>
   </template>
-
   <div class="modal fade" id="mercadopagotransparente" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
     <div class="modal-dialog  modal-lg" >
       <div class="modal-content">
@@ -221,12 +220,10 @@
           <div class="conteiner-fluid" >
             <div class="row" id="mpt-form">
               
-            </div>              
-            <img width="100" height="100" src="data:image/png;base64, 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"/>
-            
+            </div>            
             <div class="modal-footer">
               <span id="finalizar">
-                <button  type="submit"  class="btn text-white" id="cartCheckout">Continuar</button>
+                <button  type="button" data-dismiss="modal" class="btn text-white" id="cartCheckout">Continuar</button>
               </span>
             </div>
           </div>
@@ -235,8 +232,9 @@
   </div>
   <script>
     let mptform = document.getElementById('mpt-form')
-    let doc, mpt
-    function Resposta(a) {                        
+    let doc, mpt, mptid
+    var temp = document.getElementsByTagName("template");   
+    function Resposta(a,tipo) {                        
       console.log(a);          
       switch (a.status_detail) {
         case 'accredited':
@@ -245,6 +243,12 @@
             sessionStorage.setItem("frete", document.getElementById("tipo_entrega").value);
             sessionStorage.setItem("ttl", document.getElementById("total").innerHTML);
             var adata = $(this).serializeArray();
+            Swal.fire({
+              confirmButtonColor: '<?php echo $config['carrinho_cor_btn_finalizar']; ?>',
+              title:'Sucesso!!',
+              text:'Pagamento aprovado!!!', 
+              icon:'success'
+            })           
             $.ajax({
               data: adata,
               type:    "POST",
@@ -256,15 +260,167 @@
                     cache:   false,
                     url:     UrlPainel+'wa/ecommerce/checkout/detalhes.php',
                     success: function (data) {                                                            
-                      jQuery('#EcommerceCheckout').html(data);
+                      jQuery('#EcommerceCheckout').html(data)
                     },
-                });
+                })
+                .then(function(){
+                  let template = [
+                    "<style>",
+                        "#EcommerceCheckout>.card>.container>.card-body>.col-md-6{ ",
+                        " display: grid; grid-template-columns:12% 50%;  }",
+                    "</style>",
+                  ]
+                  document.querySelector('#EcommerceCheckout')
+                  .querySelector('.card')
+                  .innerHTML= template.join('')
+                })
               }, 
             });           
           })
-        break;
+          break;
+        case 'pending_waiting_payment':
+          resolveAfter2Seconds().then((res)=>{
+            sessionStorage.setItem("vfrete", document.getElementById("f_valor").innerHTML);
+            sessionStorage.setItem("frete", document.getElementById("tipo_entrega").value);
+            sessionStorage.setItem("ttl", document.getElementById("total").innerHTML);
+            var adata = $(this).serializeArray();
+            Swal.fire({
+              confirmButtonColor: '<?php echo $config['carrinho_cor_btn_finalizar']; ?>',
+              title:'Sucesso!!',
+              text:'Pagamento aprovado!!!', 
+              icon:'success'
+            })           
+            $.ajax({
+              data: adata,
+              type:    "POST",
+              cache:   false,
+              url:     UrlPainel+'wa/ecommerce/checkout/composer.php?transparente',
+              success: function (adata) {
+                $.ajax({
+                    type:    "GET",
+                    cache:   false,
+                    url:     UrlPainel+'wa/ecommerce/checkout/detalhes.php',
+                    success: function (data) {                                                            
+                      jQuery('#EcommerceCheckout').html(data)
+                    },
+                })
+                .then(function(){
+                  let template = [
+                    "<style>",
+                        "#EcommerceCheckout>.card>.container>.card-body>.col-md-6{ ",
+                        " display: grid; grid-template-columns:12% 50%;  }",
+                        "#boleto{",
+                          "display:flex;",
+                          "justify-content:center;",
+                       " }",
+                      " .fa-file-pdf-o{",
+                        "font-size:300%;",
+                        "color:#000",
+                       "}",
+                    "</style>",
+                      "<div class='container'>",
+                        "<h2 class='font-weight-bold text-center' style=' font-size:35px;'>Acesse seu boleto Bancário </h2>",
+                        "<div class='row '>",
+                          "<br>",
+                          "<div id='boleto' class='col-md-12'>",
+                            "<a href='"+a.boleto+"'>",
+                              "<i  class='fa fa-file-pdf-o' aria-hidden='true'></i>",
+                            "</a>",
+                          "</div>",
+                        "</div>",
+                      "</div>",
+                  ]
+                  document.querySelector('#EcommerceCheckout')
+                  .querySelector('.card')
+                  .innerHTML= template.join('')
+                })
+              }, 
+            });           
+          })
+          break
+        case 'pending_waiting_transfer':
+          resolveAfter2Seconds().then((res)=>{
+            sessionStorage.setItem("vfrete", document.getElementById("f_valor").innerHTML);
+            sessionStorage.setItem("frete", document.getElementById("tipo_entrega").value);
+            sessionStorage.setItem("ttl", document.getElementById("total").innerHTML);
+            var adata = $(this).serializeArray();
+            Swal.fire({
+              confirmButtonColor: '<?php echo $config['carrinho_cor_btn_finalizar']; ?>',
+              title:'Pendente',
+              text:'Pagamento pendente!!', 
+              icon:'info'
+            })           
+            $.ajax({
+              data: adata,
+              type:    "POST",
+              cache:   false,
+              url:     UrlPainel+'wa/ecommerce/checkout/composer.php?transparente',
+              success: function (adata) {
+                $.ajax({
+                    type:    "GET",
+                    cache:   false,
+                    url:     UrlPainel+'wa/ecommerce/checkout/detalhes.php',
+                    success: function (data) {                                                            
+                      jQuery('#EcommerceCheckout').html(data)
+                    },
+                })
+                .then(function(){
+                  let template = [
+                    "<style>",
+                        "#EcommerceCheckout>.card>.container>.card-body>.col-md-6{ ",
+                        " display: grid; grid-template-columns:12% 50%;  }",
+                    "</style>",
+                  ]
+                  if(a.qr_code != null) return template.push('<img width="200" height="200" src="data:image/png;base64, '+a.img+' "/>')
+                  
+                  document.querySelector('#EcommerceCheckout')
+                  .querySelector('.card')
+                  .innerHTML= template.join('')
+                })
+              }, 
+            });           
+          })
+          break;
         case 'pending_contingency':
-          // Pagamento pendente
+          resolveAfter2Seconds().then((res)=>{
+            sessionStorage.setItem("vfrete", document.getElementById("f_valor").innerHTML);
+            sessionStorage.setItem("frete", document.getElementById("tipo_entrega").value);
+            sessionStorage.setItem("ttl", document.getElementById("total").innerHTML);
+            var adata = $(this).serializeArray();
+            Swal.fire({
+              confirmButtonColor: '<?php echo $config['carrinho_cor_btn_finalizar']; ?>',
+              title:'Pendente',
+              text:'Pagamento pendente!!', 
+              icon:'info'
+            })           
+            $.ajax({
+              data: adata,
+              type:    "POST",
+              cache:   false,
+              url:     UrlPainel+'wa/ecommerce/checkout/composer.php?transparente',
+              success: function (adata) {
+                $.ajax({
+                    type:    "GET",
+                    cache:   false,
+                    url:     UrlPainel+'wa/ecommerce/checkout/detalhes.php',
+                    success: function (data) {                                                            
+                      jQuery('#EcommerceCheckout').html(data)
+                    },
+                })
+                .then(function(){
+                  let template = [
+                    "<style>",
+                        "#EcommerceCheckout>.card>.container>.card-body>.col-md-6{ ",
+                        " display: grid; grid-template-columns:12% 50%;  }",
+                    "</style>",
+                  ]
+                  document.querySelector('#EcommerceCheckout')
+                  .querySelector('.card')
+                  .innerHTML= template.join('')
+                })
+              }, 
+            });           
+          })         
           break;
         case 'cc_rejected_other_reason':
           Swal.fire({
@@ -351,14 +507,54 @@
         document.getElementById('billing_neighborhood').value,
         document.getElementById('billing_address_1').value,
         document.getElementById('billing_number').value
-        ]
-     
-      var temp = document.getElementsByTagName("template");      
+        ]     
+      
       mpt = this.event.target.value
       document.getElementById('composer').value=uri;
-
-        if (this.event.target.value != 'cartao'){
+        if (mpt != 'cartao'){
+          $.getScript("https://sdk.mercadopago.com/js/v2")
+          switch (mpt) {
+            case 'boleto':
+              mptid = 'bolbradesco'
+              break;
+            case 'pix':
+              mptid = 'pix'
+              break;            
+          }
           mptform.appendChild(temp[1].content.cloneNode(true));
+          $('#fcheckout').submit(function(e) { 
+            fetch("<?=RemoveHttpS(ConfigPainel('base_url')).'ecommerce/plugins/gateways/mercadopagotransparente/wa/process_payment.php'?>", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({                
+                payment_method_id:mptid,
+                transaction_amount: Number(document.getElementById('valor').value),
+                description: "<?= $produto['nome']; ?>",
+                first_name:document.getElementById('nome').value,
+                last_name:document.getElementById('sobrenome').value,
+                access:'<?=$mpt['accesstoken'] ?>',
+                payer: {
+                  email:document.getElementById('form-checkout__cardholderEmail').value,
+                  identification: {
+                    type: document.getElementById('form-checkout__identificationType').value,
+                    number: document.getElementById('form-checkout__identificationNumber').value,
+                  },
+                  address:{
+                    zip_code:document.getElementById('cep').value,
+                    street_name:document.getElementById('rua').value,
+                    street_number:document.getElementById('numero').value,
+                    neighborhood:document.getElementById('bairro').value,
+                    city:document.getElementById('cidade').value,
+                    federal_unit:document.getElementById('estado').value,
+                  },
+                },
+              }),
+            }).then(a=>a.json()).then(a=>{
+              new Resposta(a,mpt)                      
+            });
+          })
         }else{
           mptform.appendChild(temp[0].content.cloneNode(true));
           $.getScript("https://sdk.mercadopago.com/js/v2")
@@ -420,18 +616,17 @@
                 },            
                 onSubmit: event => {
                     event.preventDefault();                   
-                  if(document.getElementById('composer').value == "../../../ecommerce/plugins/gateways/mercadopagotransparente/wa/" || mpt == 'cartao'){
-                    let {
-                      paymentMethodId: payment_method_id,
-                      issuerId: issuer_id,
-                      cardholderEmail: email,
-                      amount,
-                      token,
-                      installments,
-                      identificationNumber,
-                      identificationType
-                    } = cardForm.getCardFormData();
-
+                  let {
+                    paymentMethodId: payment_method_id,
+                    issuerId: issuer_id,
+                    cardholderEmail: email,
+                    amount,
+                    token,
+                    installments,
+                    identificationNumber,
+                    identificationType
+                  } = cardForm.getCardFormData();  
+                  if(document.getElementById('payment_method_mercadopagotransparente1').checked){
                     fetch("<?=RemoveHttpS(ConfigPainel('base_url')).'ecommerce/plugins/gateways/mercadopagotransparente/wa/process_payment.php'?>", {
                       method: "POST",
                       headers: {
@@ -466,7 +661,7 @@
                     }).then(a=>a.json()).then(a=>{
                       new Resposta(a)                      
                     });
-                  }
+                  }                
                 },
                 onFetching: (resource) => {
                   console.log("Fetching resource: ", resource);
