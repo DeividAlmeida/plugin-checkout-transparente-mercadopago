@@ -233,7 +233,15 @@
   <script>
     let mptform = document.getElementById('mpt-form')
     let doc, mpt, mptid
+    let origem = '<?=RemoveHttpS(ConfigPainel('base_url'))?>'
     var temp = document.getElementsByTagName("template");   
+    function listener(event) {      
+      window.onload = function(){ window.getEventListeners(document.getElementById('fcheckout')).submit.forEach(function(c) {
+          document.getElementById('fcheckout').removeEventListener('submit', window.getEventListeners(document.getElementById('fcheckout')).submit[0].listener)
+        alert(0)
+        })
+      }
+    }
     function Resposta(a,tipo) {                        
       console.log(a);          
       switch (a.status_detail) {
@@ -242,7 +250,7 @@
             sessionStorage.setItem("vfrete", document.getElementById("f_valor").innerHTML);
             sessionStorage.setItem("frete", document.getElementById("tipo_entrega").value);
             sessionStorage.setItem("ttl", document.getElementById("total").innerHTML);
-            var adata = $(this).serializeArray();
+            var adata = $('#fcheckout').serializeArray();
             Swal.fire({
               confirmButtonColor: '<?php echo $config['carrinho_cor_btn_finalizar']; ?>',
               title:'Sucesso!!',
@@ -283,7 +291,7 @@
             sessionStorage.setItem("vfrete", document.getElementById("f_valor").innerHTML);
             sessionStorage.setItem("frete", document.getElementById("tipo_entrega").value);
             sessionStorage.setItem("ttl", document.getElementById("total").innerHTML);
-            var adata = $(this).serializeArray();
+            var adata = $('#fcheckout').serializeArray();
             Swal.fire({
               confirmButtonColor: '<?php echo $config['carrinho_cor_btn_finalizar']; ?>',
               title:'Sucesso!!',
@@ -343,7 +351,7 @@
             sessionStorage.setItem("vfrete", document.getElementById("f_valor").innerHTML);
             sessionStorage.setItem("frete", document.getElementById("tipo_entrega").value);
             sessionStorage.setItem("ttl", document.getElementById("total").innerHTML);
-            var adata = $(this).serializeArray();
+            var adata = $('#fcheckout').serializeArray();
             Swal.fire({
               confirmButtonColor: '<?php echo $config['carrinho_cor_btn_finalizar']; ?>',
               title:'Pendente',
@@ -369,13 +377,50 @@
                     "<style>",
                         "#EcommerceCheckout>.card>.container>.card-body>.col-md-6{ ",
                         " display: grid; grid-template-columns:12% 50%;  }",
+                        "#qr{",
+                          "display:flex;",
+                          "justify-content:center;",
+                       " }",
+                       "#codeinput{",
+                          "text-overflow: ellipsis;",
+                          "width: 100%;",
+                          "border: 0;",
+                      " }",
                     "</style>",
+                    "<div class='container'>",
+                        "<h2 class='font-weight-bold text-center' style=' font-size:35px;'>Capture o código QR ou copie o código de cobrança  </h2>",
+                        "<div class='row '>",
+                          "<br>",
+                          "<div id='qr' class='col-md-12'>",
+                            "<img width='200' height='200' src='data:image/png;base64, "+a.img+"' />",                              
+                            "<br>",
+                          "</div>",
+                        "</div>",
+                        "<br>",
+                        "<div class='row'>",
+                          "<div id='qr' class='col-12'>",
+                            "<div class='input-group' style='display:flex;width:350px'>",
+                                "<div type='text' class='form-control' style='height:60px'><b>Cód. de pagamento</b><br><input id='codeinput' value='"+a.qr_code+"'/></div>",
+                                "<button id='cartCheckout'  type='button' style='color:#fff' class='btn input-group-text'>",
+                                    "<i class='fa fa-files-o'></i>",
+                                "<b id='copiado' > Copiar</b></button>",
+                           " </div>",
+                          "</div>",
+                        "</div>",
+                      "</div>",                                    
                   ]
-                  if(a.qr_code != null) return template.push('<img width="200" height="200" src="data:image/png;base64, '+a.img+' "/>')
-                  
                   document.querySelector('#EcommerceCheckout')
                   .querySelector('.card')
                   .innerHTML= template.join('')
+                  document.querySelector('#cartCheckout').addEventListener('click', async event => {                          
+                    const text = event.target.innerText
+                    try {
+                      await navigator.clipboard.writeText(a.qr_code)
+                      event.target.textContent = ' Copiado'
+                    } catch (err) {
+                      console.error('Failed to copy! '+err)
+                    }
+                  }) 
                 })
               }, 
             });           
@@ -386,7 +431,7 @@
             sessionStorage.setItem("vfrete", document.getElementById("f_valor").innerHTML);
             sessionStorage.setItem("frete", document.getElementById("tipo_entrega").value);
             sessionStorage.setItem("ttl", document.getElementById("total").innerHTML);
-            var adata = $(this).serializeArray();
+            var adata = $('#fcheckout').serializeArray();
             Swal.fire({
               confirmButtonColor: '<?php echo $config['carrinho_cor_btn_finalizar']; ?>',
               title:'Pendente',
@@ -486,6 +531,7 @@
       }
     }
     function mercadopagotransparente(uri) {
+      new listener()
       mptform.innerHTML=''
       switch (document.getElementById('billing_persontype').value) {
         case '1':
@@ -511,7 +557,8 @@
       
       mpt = this.event.target.value
       document.getElementById('composer').value=uri;
-        if (mpt != 'cartao'){
+      //if(getEventListeners(document.getElementById('fcheckout')).submit != undefined){ alert(0)}
+        if (mpt != 'cartão'){
           $.getScript("https://sdk.mercadopago.com/js/v2")
           switch (mpt) {
             case 'boleto':
@@ -522,8 +569,10 @@
               break;            
           }
           mptform.appendChild(temp[1].content.cloneNode(true));
-          $('#fcheckout').submit(function(e) { 
-            fetch("<?=RemoveHttpS(ConfigPainel('base_url')).'ecommerce/plugins/gateways/mercadopagotransparente/wa/process_payment.php'?>", {
+          //document.getElementById('fcheckout').removeEventListener('submit', listener, false)
+          $('#fcheckout').submit(function(e) {
+
+            fetch(origem+'ecommerce/plugins/gateways/mercadopagotransparente/wa/process_payment.php', {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -552,9 +601,9 @@
                 },
               }),
             }).then(a=>a.json()).then(a=>{
-              new Resposta(a,mpt)                      
+             if(origem != null && a.status_detail != null){new Resposta(a,mpt); origem = null }                     
             });
-          })
+          })          
         }else{
           mptform.appendChild(temp[0].content.cloneNode(true));
           $.getScript("https://sdk.mercadopago.com/js/v2")
@@ -676,3 +725,4 @@
       });
     }
   </script>
+
