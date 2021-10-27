@@ -294,9 +294,9 @@
             var adata = $('#fcheckout').serializeArray();
             Swal.fire({
               confirmButtonColor: '<?php echo $config['carrinho_cor_btn_finalizar']; ?>',
-              title:'Sucesso!!',
-              text:'Pagamento aprovado!!!', 
-              icon:'success'
+              title:'Pendente',
+              text:'Pagamento pendente!!', 
+              icon:'info'
             })           
             $.ajax({
               data: adata,
@@ -331,7 +331,7 @@
                         "<div class='row '>",
                           "<br>",
                           "<div id='boleto' class='col-md-12'>",
-                            "<a href='"+a.boleto+"'>",
+                            "<a href='"+a.transaction_details.external_resource_url+"'>",
                               "<i  class='fa fa-file-pdf-o' aria-hidden='true'></i>",
                             "</a>",
                           "</div>",
@@ -392,7 +392,7 @@
                         "<div class='row '>",
                           "<br>",
                           "<div id='qr' class='col-md-12'>",
-                            "<img width='200' height='200' src='data:image/png;base64, "+a.img+"' />",                              
+                            "<img width='200' height='200' src='data:image/png;base64, "+a.point_of_interaction.transaction_data.qr_code_base64+"' />",                              
                             "<br>",
                           "</div>",
                         "</div>",
@@ -400,7 +400,7 @@
                         "<div class='row'>",
                           "<div id='qr' class='col-12'>",
                             "<div class='input-group' style='display:flex;width:350px'>",
-                                "<div type='text' class='form-control' style='height:60px'><b>Cód. de pagamento</b><br><input id='codeinput' value='"+a.qr_code+"'/></div>",
+                                "<div type='text' class='form-control' style='height:60px'><b>Cód. de pagamento</b><br><input id='codeinput' value='"+a.point_of_interaction.transaction_data.qr_code+"'/></div>",
                                 "<button id='cartCheckout'  type='button' style='color:#fff' class='btn input-group-text'>",
                                     "<i class='fa fa-files-o'></i>",
                                 "<b id='copiado' > Copiar</b></button>",
@@ -523,6 +523,16 @@
             confirmButtonColor: '<?php echo $config['carrinho_cor_btn_finalizar']; ?>',
             title:'Erro',
             text:'Recusado por erro no formulário', 
+            icon:'error'})
+            .then(recarrega =>{
+              window.location.reload(true)
+            })
+          break;  
+          case 'cc_rejected_bad_filled_card_number':
+          Swal.fire({
+            confirmButtonColor: '<?php echo $config['carrinho_cor_btn_finalizar']; ?>',
+            title:'Erro',
+            text:'Recusado por erro no cartão', 
             icon:'error'})
             .then(recarrega =>{
               window.location.reload(true)
