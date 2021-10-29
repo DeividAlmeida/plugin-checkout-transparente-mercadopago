@@ -9,7 +9,10 @@ $mercadopago = DBRead('ecommerce_plugins','*', "WHERE nome = 'mercadopago'")[0];
 
 <div class="card">
     <div class="card-header white">
-    <strong>Configurar Meio de Pagamento</strong>
+    <strong>Configurar Meio de Pagamento </strong><br>
+    <center>
+        <a href="https://www.mercadopago.com/mlb/account/credentials" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Buscar minhas credenciais</a>
+    </center> 
 </div>
 <div class="card-body">        
     <div class="row">

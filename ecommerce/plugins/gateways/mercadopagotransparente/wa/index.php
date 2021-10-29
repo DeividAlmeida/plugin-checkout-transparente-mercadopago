@@ -1,7 +1,6 @@
-  <?php 
+<?php 
     $mpt =  DBRead('ecommerce_mercadopago_transparente','*')[0];
   ?>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <style>
     @media screen and (min-width: 576px) {
       .modal-dialog{
@@ -99,23 +98,27 @@
       </div>
       <div class="form-group">
         <label>Número do Cartão</label>
-        <input class="form-control" type="number" name="cardNumber" id="form-checkout__cardNumber" value="5031433215406351" required/>
+        <input class="form-control" type="number" name="cardNumber" id="form-checkout__cardNumber" value="" required/>
+        <!-- 5031433215406351 -->
       </div>
       <div class="form-group">
         <label>Mês de Vencimento</label>
-        <input class="form-control" type="number" name="cardExpirationMonth" id="form-checkout__cardExpirationMonth" value="11" required/>
+        <input class="form-control" type="number" name="cardExpirationMonth" id="form-checkout__cardExpirationMonth" value="" required/>
+        <!-- 11 -->
       </div>
       <div class="form-group">
         <label>Ano de Vencimento</label>
-        <input class="form-control" type="number"   name="cardExpirationYear" id="form-checkout__cardExpirationYear" value="25" required/>
+        <input class="form-control" type="number"   name="cardExpirationYear" id="form-checkout__cardExpirationYear" value="" required/>
+      <!-- 25 -->
       </div>
       <div class="form-group">
         <label>Nome do Cartão</label>
-        <input class="form-control" type="text" name="cardholderName" id="form-checkout__cardholderName"value="nome" required/>  
+        <input class="form-control" type="text" name="cardholderName" id="form-checkout__cardholderName"value="" required/>  
       </div>               
       <div class="from-group">
         <label>Código do Cartão</label>
-        <input class="form-control" type="text" name="securityCode" id="form-checkout__securityCode" value="123" required/>
+        <input class="form-control" type="text" name="securityCode" id="form-checkout__securityCode" value="" required/>
+        <!-- 123 -->
       </div>
       <div class="form-group">
         <label for="">Bandeira do Cartão</label>
@@ -223,7 +226,7 @@
             </div>            
             <div class="modal-footer">
               <span id="finalizar">
-                <button  type="button" data-dismiss="modal" class="btn text-white" id="cartCheckout">Continuar</button>
+                <button  type="submit" style="color:#fff"  class="btn text-white" id="cartCheckout" >Finalizar Compra</button>
               </span>
             </div>
           </div>
@@ -234,15 +237,30 @@
     let mptform = document.getElementById('mpt-form')
     let doc, mpt, mptid
     let origem = '<?=RemoveHttpS(ConfigPainel('base_url'))?>'
-    var temp = document.getElementsByTagName("template");   
+    var temp = document.getElementsByTagName("template");  
+    function closeOneModal(modalId) {
+    // get modal
+    const modal = document.getElementById(modalId);
+
+    // change state like in hidden modal
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden', 'true');
+    modal.setAttribute('style', 'display: none');
+    document.getElementsByClassName('modal-open')[0].setAttribute('class','')
+
+    // get modal backdrop
+    const modalBackdrops = document.getElementsByClassName('modal-backdrop');
+
+    // remove opened modal backdrop
+      document.body.removeChild(modalBackdrops[0]);
+    } 
     function listener(event) {      
       window.onload = function(){ window.getEventListeners(document.getElementById('fcheckout')).submit.forEach(function(c) {
           document.getElementById('fcheckout').removeEventListener('submit', window.getEventListeners(document.getElementById('fcheckout')).submit[0].listener)
-        alert(0)
         })
       }
     }
-    function Resposta(a,tipo) {                        
+    function Resposta(a) {                        
       console.log(a);          
       switch (a.status_detail) {
         case 'accredited':
@@ -291,13 +309,7 @@
             sessionStorage.setItem("vfrete", document.getElementById("f_valor").innerHTML);
             sessionStorage.setItem("frete", document.getElementById("tipo_entrega").value);
             sessionStorage.setItem("ttl", document.getElementById("total").innerHTML);
-            var adata = $('#fcheckout').serializeArray();
-            Swal.fire({
-              confirmButtonColor: '<?php echo $config['carrinho_cor_btn_finalizar']; ?>',
-              title:'Pendente',
-              text:'Pagamento pendente!!', 
-              icon:'info'
-            })           
+            var adata = $('#fcheckout').serializeArray();                     
             $.ajax({
               data: adata,
               type:    "POST",
@@ -338,9 +350,11 @@
                         "</div>",
                       "</div>",
                   ]
+                 new mpstatus(a.id, '<?=$mpt['accesstoken'] ?>','<?php echo $config['carrinho_cor_btn_finalizar']; ?>')
                   document.querySelector('#EcommerceCheckout')
                   .querySelector('.card')
                   .innerHTML= template.join('')
+
                 })
               }, 
             });           
@@ -352,12 +366,7 @@
             sessionStorage.setItem("frete", document.getElementById("tipo_entrega").value);
             sessionStorage.setItem("ttl", document.getElementById("total").innerHTML);
             var adata = $('#fcheckout').serializeArray();
-            Swal.fire({
-              confirmButtonColor: '<?php echo $config['carrinho_cor_btn_finalizar']; ?>',
-              title:'Pendente',
-              text:'Pagamento pendente!!', 
-              icon:'info'
-            })           
+                     
             $.ajax({
               data: adata,
               type:    "POST",
@@ -392,7 +401,7 @@
                         "<div class='row '>",
                           "<br>",
                           "<div id='qr' class='col-md-12'>",
-                            "<img width='200' height='200' src='data:image/png;base64, "+a.point_of_interaction.transaction_data.qr_code_base64+"' />",                              
+                            "<img  width='200' height='200' src='data:image/png;base64, "+a.point_of_interaction.transaction_data.qr_code_base64+"' />",                              
                             "<br>",
                           "</div>",
                         "</div>",
@@ -409,18 +418,19 @@
                         "</div>",
                       "</div>",                                    
                   ]
+                 new mpstatus(a.id, '<?=$mpt['accesstoken'] ?>','<?php echo $config['carrinho_cor_btn_finalizar']; ?>')
                   document.querySelector('#EcommerceCheckout')
                   .querySelector('.card')
                   .innerHTML= template.join('')
-                  document.querySelector('#cartCheckout').addEventListener('click', async event => {                          
-                    const text = event.target.innerText
+                  document.querySelector('#cartCheckout').addEventListener('click', async event => {                         
                     try {
-                      await navigator.clipboard.writeText(a.qr_code)
-                      event.target.textContent = ' Copiado'
+                      await navigator.clipboard.writeText(a.point_of_interaction.transaction_data.qr_code)
+                      event.target.innerHTML = ' <b>Copiado</b>'
                     } catch (err) {
                       console.error('Failed to copy! '+err)
                     }
-                  }) 
+                  })
+                  
                 })
               }, 
             });           
@@ -431,13 +441,7 @@
             sessionStorage.setItem("vfrete", document.getElementById("f_valor").innerHTML);
             sessionStorage.setItem("frete", document.getElementById("tipo_entrega").value);
             sessionStorage.setItem("ttl", document.getElementById("total").innerHTML);
-            var adata = $('#fcheckout').serializeArray();
-            Swal.fire({
-              confirmButtonColor: '<?php echo $config['carrinho_cor_btn_finalizar']; ?>',
-              title:'Pendente',
-              text:'Pagamento pendente!!', 
-              icon:'info'
-            })           
+            var adata = $('#fcheckout').serializeArray();                     
             $.ajax({
               data: adata,
               type:    "POST",
@@ -568,7 +572,7 @@
       mpt = this.event.target.value
       document.getElementById('composer').value=uri;
       //if(getEventListeners(document.getElementById('fcheckout')).submit != undefined){ alert(0)}
-        if (mpt != 'cartão'){
+        if (mpt != 'cartão'){        
           $.getScript("https://sdk.mercadopago.com/js/v2")
           switch (mpt) {
             case 'boleto':
@@ -581,7 +585,7 @@
           mptform.appendChild(temp[1].content.cloneNode(true));
           //document.getElementById('fcheckout').removeEventListener('submit', listener, false)
           $('#fcheckout').submit(function(e) {
-
+            new closeOneModal('mercadopagotransparente') 
             fetch(origem+'ecommerce/plugins/gateways/mercadopagotransparente/wa/process_payment.php', {
               method: "POST",
               headers: {
@@ -674,6 +678,7 @@
                   console.log("Form mounted");
                 },            
                 onSubmit: event => {
+                  new closeOneModal('mercadopagotransparente') 
                     event.preventDefault();                   
                   let {
                     paymentMethodId: payment_method_id,
