@@ -1,4 +1,4 @@
-<?php 
+  <?php 
     $mpt =  DBRead('ecommerce_mercadopago_transparente','*')[0];
   ?>
   <style>
@@ -217,7 +217,6 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Dados de Cobrança </h5>
-          <button type="button" class="btn-close" id="mpt-close" data-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body" >
           <div class="conteiner-fluid" >
@@ -237,23 +236,7 @@
     let mptform = document.getElementById('mpt-form')
     let doc, mpt, mptid
     let origem = '<?=RemoveHttpS(ConfigPainel('base_url'))?>'
-    var temp = document.getElementsByTagName("template");  
-    function closeOneModal(modalId) {
-    // get modal
-    const modal = document.getElementById(modalId);
-
-    // change state like in hidden modal
-    modal.classList.remove('show');
-    modal.setAttribute('aria-hidden', 'true');
-    modal.setAttribute('style', 'display: none');
-    document.getElementsByClassName('modal-open')[0].setAttribute('class','')
-
-    // get modal backdrop
-    const modalBackdrops = document.getElementsByClassName('modal-backdrop');
-
-    // remove opened modal backdrop
-      document.body.removeChild(modalBackdrops[0]);
-    } 
+    var temp = document.getElementsByTagName("template");   
     function listener(event) {      
       window.onload = function(){ window.getEventListeners(document.getElementById('fcheckout')).submit.forEach(function(c) {
           document.getElementById('fcheckout').removeEventListener('submit', window.getEventListeners(document.getElementById('fcheckout')).submit[0].listener)
@@ -343,7 +326,7 @@
                         "<div class='row '>",
                           "<br>",
                           "<div id='boleto' class='col-md-12'>",
-                            "<a href='"+a.transaction_details.external_resource_url+"'>",
+                            "<a target='_blank' href='"+a.transaction_details.external_resource_url+"'>",
                               "<i  class='fa fa-file-pdf-o' aria-hidden='true'></i>",
                             "</a>",
                           "</div>",
@@ -478,7 +461,11 @@
             text:'Recusado por erro geral', 
             icon:'error'})
             .then(recarrega =>{
-              window.location.reload(true)
+              document.getElementById('finalizar').innerHTML = '<input type="submit" id="cartCheckout"  value="Finalizar compra" >'
+              document.getElementsByName('payment_method').forEach(radio=>{
+                radio.checked = false
+              })
+              if(document.getElementById('MPHiddenInputToken') != undefined ) return document.getElementById('MPHiddenInputToken').remove()
             })
           break;
         case 'cc_rejected_call_for_authorize':
@@ -489,7 +476,11 @@
             text:'Recusado com validação para autorizar', 
             icon:'error'})
             .then(recarrega =>{
-              window.location.reload(true)
+              document.getElementById('finalizar').innerHTML = '<input type="submit" id="cartCheckout"  value="Finalizar compra" >'
+              document.getElementsByName('payment_method').forEach(radio=>{
+                radio.checked = false
+              })
+              if(document.getElementById('MPHiddenInputToken') != undefined ) return document.getElementById('MPHiddenInputToken').remove()
             })
           break;
         case 'cc_rejected_insufficient_amount':
@@ -499,7 +490,11 @@
             text:'Recusado por quantia insuficiente', 
             icon:'error'})
             .then(recarrega =>{
-              window.location.reload(true)
+              document.getElementById('finalizar').innerHTML = '<input type="submit" id="cartCheckout"  value="Finalizar compra" >'
+              document.getElementsByName('payment_method').forEach(radio=>{
+                radio.checked = false
+              })
+              if(document.getElementById('MPHiddenInputToken') != undefined ) return document.getElementById('MPHiddenInputToken').remove()
             })
           break;
         case 'cc_rejected_bad_filled_security_code':
@@ -509,7 +504,11 @@
             text:'Recusado por código de segurança inválido', 
             icon:'error'})
             .then(recarrega =>{
-              window.location.reload(true)
+              document.getElementById('finalizar').innerHTML = '<input type="submit" id="cartCheckout"  value="Finalizar compra" >'
+              document.getElementsByName('payment_method').forEach(radio=>{
+                radio.checked = false
+              })
+              if(document.getElementById('MPHiddenInputToken') != undefined ) return document.getElementById('MPHiddenInputToken').remove()
             })
           break;
         case 'cc_rejected_bad_filled_date':
@@ -519,7 +518,11 @@
             text:'Recusado por problema com a data de vencimento', 
             icon:'error'})
             .then(recarrega =>{
-              window.location.reload(true)
+              document.getElementById('finalizar').innerHTML = '<input type="submit" id="cartCheckout"  value="Finalizar compra" >'
+              document.getElementsByName('payment_method').forEach(radio=>{
+                radio.checked = false
+              })
+              if(document.getElementById('MPHiddenInputToken') != undefined ) return document.getElementById('MPHiddenInputToken').remove()
             })
           break;
         case 'cc_rejected_bad_filled_other':
@@ -529,7 +532,11 @@
             text:'Recusado por erro no formulário', 
             icon:'error'})
             .then(recarrega =>{
-              window.location.reload(true)
+              document.getElementById('finalizar').innerHTML = '<input type="submit" id="cartCheckout"  value="Finalizar compra" >'
+              document.getElementsByName('payment_method').forEach(radio=>{
+                radio.checked = false
+              })
+              if(document.getElementById('MPHiddenInputToken') != undefined ) return document.getElementById('MPHiddenInputToken').remove()
             })
           break;  
           case 'cc_rejected_bad_filled_card_number':
@@ -539,7 +546,11 @@
             text:'Recusado por erro no cartão', 
             icon:'error'})
             .then(recarrega =>{
-              window.location.reload(true)
+              document.getElementById('finalizar').innerHTML = '<input type="submit" id="cartCheckout"  value="Finalizar compra" >'
+              document.getElementsByName('payment_method').forEach(radio=>{
+                radio.checked = false
+              })
+              if(document.getElementById('MPHiddenInputToken') != undefined ) return document.getElementById('MPHiddenInputToken').remove()
             })
           break;        
       }
@@ -585,7 +596,7 @@
           mptform.appendChild(temp[1].content.cloneNode(true));
           //document.getElementById('fcheckout').removeEventListener('submit', listener, false)
           $('#fcheckout').submit(function(e) {
-            new closeOneModal('mercadopagotransparente') 
+            jQuery('#mercadopagotransparente').modal('hide')
             fetch(origem+'ecommerce/plugins/gateways/mercadopagotransparente/wa/process_payment.php', {
               method: "POST",
               headers: {
@@ -677,8 +688,8 @@
                   if (error) return console.warn("Form Mounted handling error: ", error);
                   console.log("Form mounted");
                 },            
-                onSubmit: event => {
-                  new closeOneModal('mercadopagotransparente') 
+                onSubmit: event => {                  
+                  jQuery('#mercadopagotransparente').modal('hide')
                     event.preventDefault();                   
                   let {
                     paymentMethodId: payment_method_id,
@@ -696,7 +707,7 @@
                       headers: {
                         "Content-Type": "application/json",
                       },
-                      body: JSON.stringify({
+                      body:  JSON.stringify({
                         token,
                         issuer_id,
                         payment_method_id,
